@@ -1,4 +1,5 @@
-﻿using PatikaDev.NetCore.BookStore.Common;
+﻿using AutoMapper;
+using PatikaDev.NetCore.BookStore.Common;
 using PatikaDev.NetCore.BookStore.DBOperations;
 using System;
 using System.Collections.Generic;
@@ -10,30 +11,29 @@ namespace PatikaDev.NetCore.BookStore.BookOperations.GetBookById
     public class GetBookByIdQuery
     {
         private readonly BookStoreDbContext _dbContext;
-        public GetBookByIdQuery(BookStoreDbContext dbContext)
+        private readonly IMapper _mapper;
+        public int bookId { get; set; }
+        public GetBookByIdQuery(BookStoreDbContext dbContext, IMapper mapper)
         {
             _dbContext = dbContext;
+            _mapper = mapper;
         }
-        public BooksViewModel Handle(int id)
+        public BookIdViewModel Handle()
         {
-            var book = _dbContext.Books.Find(id);
+            var book = _dbContext.Books.Find(bookId);
             if (book is null)
                 throw new InvalidOperationException("Kitap sistemde kayıtlı değil!");
-            BooksViewModel _book = new BooksViewModel();
-            _book.Title = book.Title;
-            _book.Genre = ((GenreEnum)book.GenreId).ToString();
-            _book.PublishDate = book.PublishDate.Date.ToString("dd/MM/yyyy");
-            _book.PageCount = book.PageCount;
- 
-            return _book;
+            BookIdViewModel bookVM = _mapper.Map < BookIdViewModel > (book); 
+            return bookVM;
         }
     }
-    public class BooksViewModel
+    public class BookIdViewModel
     {
         public string Title { get; set; }
+        public string Genre { get; set; }
         public int PageCount { get; set; }
         public string PublishDate { get; set; }
-        public string Genre { get; set; }
+        
     }
 
 }

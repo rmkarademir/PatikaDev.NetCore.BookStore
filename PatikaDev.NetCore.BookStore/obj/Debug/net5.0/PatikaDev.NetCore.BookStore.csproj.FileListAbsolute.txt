@@ -32,3 +32,10 @@ C:\Users\ruste\source\repos\PatikaDev.NetCore.BookStore\PatikaDev.NetCore.BookSt
 C:\Users\ruste\source\repos\PatikaDev.NetCore.BookStore\PatikaDev.NetCore.BookStore\obj\Debug\net5.0\PatikaDev.NetCore.BookStore.pdb
 C:\Users\ruste\source\repos\PatikaDev.NetCore.BookStore\PatikaDev.NetCore.BookStore\obj\Debug\net5.0\PatikaDev.NetCore.BookStore.genruntimeconfig.cache
 C:\Users\ruste\source\repos\PatikaDev.NetCore.BookStore\PatikaDev.NetCore.BookStore\obj\Debug\net5.0\PatikaDev.NetCore.BookStore.csproj.CopyComplete
+C:\Users\ruste\source\repos\PatikaDev.NetCore.BookStore\PatikaDev.NetCore.BookStore\bin\Debug\net5.0\AutoMapper.dll
+C:\Users\ruste\source\repos\PatikaDev.NetCore.BookStore\PatikaDev.NetCore.BookStore\bin\Debug\net5.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+C:\Users\ruste\source\repos\PatikaDev.NetCore.BookStore\PatikaDev.NetCore.BookStore\bin\Debug\net5.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\ruste\source\repos\PatikaDev.NetCore.BookStore\PatikaDev.NetCore.BookStore\bin\Debug\net5.0\Microsoft.Extensions.Options.dll
+C:\Users\ruste\source\repos\PatikaDev.NetCore.BookStore\PatikaDev.NetCore.BookStore\bin\Debug\net5.0\Microsoft.Extensions.Primitives.dll
+C:\Users\ruste\source\repos\PatikaDev.NetCore.BookStore\PatikaDev.NetCore.BookStore\bin\Debug\net5.0\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\ruste\source\repos\PatikaDev.NetCore.BookStore\PatikaDev.NetCore.BookStore\bin\Debug\net5.0\FluentValidation.dll

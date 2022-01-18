@@ -10,15 +10,16 @@ namespace PatikaDev.NetCore.BookStore.BookOperations.UpdateBook
     public class UpdateBookCommand
     {
         public UpdateBookModel Model { get; set; }
+        public int bookId { get; set; }
         private readonly BookStoreDbContext _dbContext;
         public UpdateBookCommand(BookStoreDbContext dbContext)
         {
             _dbContext = dbContext;
         }
 
-        public void Handle(int id)
+        public void Handle()
         {
-            var book = _dbContext.Books.Find(id);
+            var book = _dbContext.Books.Find(bookId);
             if (book is null)
                 throw new InvalidOperationException("Kitap sistemde kayıtlı değil!");
             book.Title = Model.Title != default ? Model.Title : book.Title;
@@ -31,9 +32,11 @@ namespace PatikaDev.NetCore.BookStore.BookOperations.UpdateBook
         public class UpdateBookModel
         {
             public string Title { get; set; }
+            public int GenreId { get; set; }
+
             //public int PageCount { get; set; }
             //public DateTime PublishDate { get; set; }
-            public int GenreId { get; set; }
+            
         }
     }
 }

@@ -12,6 +12,7 @@ using PatikaDev.NetCore.BookStore.DBOperations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace PatikaDev.NetCore.BookStore
@@ -35,6 +36,7 @@ namespace PatikaDev.NetCore.BookStore
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "PatikaDev.NetCore.BookStore", Version = "v1" });
             });
             services.AddDbContext<BookStoreDbContext>(options => options.UseInMemoryDatabase(databaseName:"BookStoreDB"));
+            services.AddAutoMapper(Assembly.GetExecutingAssembly());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

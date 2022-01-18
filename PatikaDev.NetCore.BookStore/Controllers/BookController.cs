@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using FluentValidation;
+using FluentValidation.Results;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PatikaDev.NetCore.BookStore.BookOperations.CreateBook;
 using PatikaDev.NetCore.BookStore.BookOperations.DeleteBook;
@@ -21,25 +24,30 @@ namespace PatikaDev.NetCore.BookStore.Controllers
     public class BookController : ControllerBase
     {
         private readonly BookStoreDbContext _context; // readonly sadece constrctor içerisinden set edilebilir
-        public BookController(BookStoreDbContext context)
+        private readonly IMapper _mapper;
+        public BookController(BookStoreDbContext context, IMapper mapper)
         {
-            _context = context; 
+            _context = context;
+            _mapper = mapper;
         }
 
         [HttpGet]
         public IActionResult Get()
         {
-            GetBooksQuery getBooksQuery = new GetBooksQuery(_context);
-            var result = getBooksQuery.Handle();
+            GetBooksQuery query = new GetBooksQuery(_context,_mapper);
+            var result = query.Handle();
             return Ok(result);
         }
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
-            GetBookByIdQuery getBookByIdQuery = new GetBookByIdQuery(_context);
+            GetBookByIdQuery query = new GetBookByIdQuery(_context,_mapper);
             try
             {
-                var result = getBookByIdQuery.Handle(id);
+                query.bookId = id;
+                GetBookByIdQueryValidator validator = new GetBookByIdQueryValidator();
+                validator.ValidateAndThrow(query);
+                var result = query.Handle();
                 return Ok(result);
             }
             catch (Exception ex)
@@ -59,10 +67,12 @@ namespace PatikaDev.NetCore.BookStore.Controllers
         [HttpPost]
         public IActionResult Create([FromBody]CreateBookModel book)
         {
-            CreateBookCommand command = new CreateBookCommand(_context);
+            CreateBookCommand command = new CreateBookCommand(_context,_mapper);
             try
             {
                 command.Model = book;
+                CreateBookCommandValidator validator = new CreateBookCommandValidator();
+                validator.ValidateAndThrow(command);
                 command.Handle();
             }
             catch (Exception ex)
@@ -77,8 +87,11 @@ namespace PatikaDev.NetCore.BookStore.Controllers
             UpdateBookCommand command = new UpdateBookCommand(_context);
             try
             {
+                command.bookId = id;
                 command.Model = book;
-                command.Handle(id);
+                UpdateBookCommandValidator validator = new UpdateBookCommandValidator();
+                validator.ValidateAndThrow(command);
+                command.Handle();
             }
             catch (Exception ex)
             {
@@ -92,7 +105,10 @@ namespace PatikaDev.NetCore.BookStore.Controllers
             DeleteBookCommand command = new DeleteBookCommand(_context);
             try
             {
-                command.Handle(id);
+                command.bookId = id;
+                DeteleBookCommandValidator validator = new DeteleBookCommandValidator();
+                validator.ValidateAndThrow(command); 
+                command.Handle();
             }
             catch (Exception ex)
             {
