@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PatikaDev.NetCore.BookStore.BookOperations.CreateBook;
+using PatikaDev.NetCore.BookStore.BookOperations.DeleteBook;
 using PatikaDev.NetCore.BookStore.BookOperations.GetBookById;
 using PatikaDev.NetCore.BookStore.BookOperations.GetBooks;
 using PatikaDev.NetCore.BookStore.BookOperations.UpdateBook;
@@ -45,6 +46,7 @@ namespace PatikaDev.NetCore.BookStore.Controllers
             {
                 return BadRequest(ex.Message);
             }
+            
         }
         /*[HttpGet("list")]
         public IActionResult GetList(string listName, string order)
@@ -87,11 +89,16 @@ namespace PatikaDev.NetCore.BookStore.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            var book = _context.Books.Find(id);
-            if (book is null)
-                return BadRequest(id + " Idli kitap sistemde kayıtlı değil!");
-            _context.Books.Remove(book);
-            _context.SaveChanges();
+            DeleteBookCommand command = new DeleteBookCommand(_context);
+            try
+            {
+                command.Handle(id);
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex.Message);
+            }
             return Ok();
         }
 

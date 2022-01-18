@@ -22,17 +22,17 @@ namespace PatikaDev.NetCore.BookStore.BookOperations.UpdateBook
             if (book is null)
                 throw new InvalidOperationException("Kitap sistemde kayıtlı değil!");
             book.Title = Model.Title != default ? Model.Title : book.Title;
-            book.PageCount = Model.PageCount != default ? Model.PageCount : book.PageCount;
+            //book.PageCount = Model.PageCount != default ? Model.PageCount : book.PageCount;
             book.GenreId = Model.GenreId != default ? Model.GenreId : book.GenreId;
-            book.PublishDate = Model.PublishDate != default ? Model.PublishDate : book.PublishDate;
+            //book.PublishDate = Model.PublishDate != default ? Model.PublishDate : book.PublishDate;
             _dbContext.SaveChanges();
         }
 
         public class UpdateBookModel
         {
             public string Title { get; set; }
-            public int PageCount { get; set; }
-            public DateTime PublishDate { get; set; }
+            //public int PageCount { get; set; }
+            //public DateTime PublishDate { get; set; }
             public int GenreId { get; set; }
         }
     }
