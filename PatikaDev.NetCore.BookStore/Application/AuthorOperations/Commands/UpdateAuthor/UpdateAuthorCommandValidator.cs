@@ -1,0 +1,19 @@
+﻿using FluentValidation;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace PatikaDev.NetCore.BookStore.Application.AuthorOperations.Commands.UpdateAuthor
+{
+    public class UpdateAuthorCommandValidator : AbstractValidator<UpdateAuthorCommand>
+    {
+        public UpdateAuthorCommandValidator()
+        {
+            RuleFor(command=>command.authorId).GreaterThan(0);
+            RuleFor(command => command.Model.FirstName).NotEmpty().MinimumLength(2);
+            RuleFor(command => command.Model.LastName).NotEmpty().MinimumLength(2);
+            RuleFor(command => command.Model.BirthDate.Date).LessThan(DateTime.Now.Date);
+        }
+    }
+}

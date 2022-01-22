@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +10,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using PatikaDev.NetCore.BookStore.DBOperations;
+using PatikaDev.NetCore.BookStore.Middlewares;
+using PatikaDev.NetCore.BookStore.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,6 +40,7 @@ namespace PatikaDev.NetCore.BookStore
             });
             services.AddDbContext<BookStoreDbContext>(options => options.UseInMemoryDatabase(databaseName:"BookStoreDB"));
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
+            services.AddSingleton<ILoggerService, DBLogger>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -54,6 +58,60 @@ namespace PatikaDev.NetCore.BookStore
             app.UseRouting();
 
             app.UseAuthorization();
+
+            //app.Use(async (context, next) =>
+            //{
+            //    Console.WriteLine("Middleware1 basladi");
+            //    await next.Invoke();
+            //    Console.WriteLine("Middleware1 sonlandi.");
+            //});
+            //app.Use(async (context, next) =>
+            //{
+            //    Console.WriteLine("Middleware2 basladi");
+            //    await next.Invoke();
+            //    Console.WriteLine("Middleware2 sonlandi.");
+            //});
+
+            //app.UseFirst();
+
+            //app.Use(async(context, next)=>
+            //{
+            //Console.WriteLine("Use Middleware tetiklendi");
+            //await next.Invoke();
+            //});
+
+            //app.Map("/example", internalApp =>
+            //internalApp.Run(async context =>
+            //{
+            //Console.WriteLine("/example middleware tetiklendi.");
+            //await context.Response.WriteAsync("/example middleware tetiklendi.");
+            //}));
+
+            //app.Use(async (context, next) =>
+            //{
+            //    Console.WriteLine("Use Middleware tetiklendi2");
+            //    await next.Invoke();
+            //});
+
+            //app.MapWhen(x=>x.Request.Method == "GET", internalApp =>
+            //{
+            //    internalApp.Run(async context =>
+            //    {
+            //        Console.WriteLine("Get istegi ile Middleware tetiklendi");
+            //        await context.Response.WriteAsync("Get istegi ile Middleware tetiklendi");
+            //    });
+            //});
+
+            //app.MapWhen(x => x.Request.Method == "PUT", internalApp =>
+            //{
+            //    internalApp.Run(async context =>
+            //    {
+            //        Console.WriteLine("Put istegi ile  Middleware tetiklendi");
+            //        await context.Response.WriteAsync("Put istegi ile Middleware tetiklendi");
+            //    });
+            //});
+
+            app.UseCustomExceptionMiddleware();
 
             app.UseEndpoints(endpoints =>
             {

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "7xSJIR8N9VhRlziGX3mv6XJ4HEMX+Gr09Pk1FcTnWROTxI70LxBEBfGZh5nx+lFKgDYGokRXihlsB/2QV755RA==",
+  "dgSpecHash": "8GWGlhgMq+plA4M4UI+4m+TFPb1rIMnnAGUdPX3oCsvjpqu+JF7oh1bCAIYc4uwc2P/eEtrUsVBLP8AAzVIDSg==",
   "success": true,
   "projectFilePath": "C:\\Users\\ruste\\source\\repos\\PatikaDev.NetCore.BookStore\\PatikaDev.NetCore.BookStore\\PatikaDev.NetCore.BookStore.csproj",
   "expectedPackageFiles": [
@@ -22,6 +22,7 @@
     "C:\\Users\\ruste\\.nuget\\packages\\microsoft.extensions.options\\6.0.0\\microsoft.extensions.options.6.0.0.nupkg.sha512",
     "C:\\Users\\ruste\\.nuget\\packages\\microsoft.extensions.primitives\\6.0.0\\microsoft.extensions.primitives.6.0.0.nupkg.sha512",
     "C:\\Users\\ruste\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
+    "C:\\Users\\ruste\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
     "C:\\Users\\ruste\\.nuget\\packages\\swashbuckle.aspnetcore\\5.6.3\\swashbuckle.aspnetcore.5.6.3.nupkg.sha512",
     "C:\\Users\\ruste\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\5.6.3\\swashbuckle.aspnetcore.swagger.5.6.3.nupkg.sha512",
     "C:\\Users\\ruste\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\5.6.3\\swashbuckle.aspnetcore.swaggergen.5.6.3.nupkg.sha512",

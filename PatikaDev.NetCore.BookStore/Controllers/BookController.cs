@@ -3,19 +3,19 @@ using FluentValidation;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using PatikaDev.NetCore.BookStore.BookOperations.CreateBook;
-using PatikaDev.NetCore.BookStore.BookOperations.DeleteBook;
-using PatikaDev.NetCore.BookStore.BookOperations.GetBookById;
-using PatikaDev.NetCore.BookStore.BookOperations.GetBooks;
-using PatikaDev.NetCore.BookStore.BookOperations.UpdateBook;
+using PatikaDev.NetCore.BookStore.Application.BookOperations.Commands.DeleteBook;
+using PatikaDev.NetCore.BookStore.Application.BookOperations.Queries.GetBookById;
+using PatikaDev.NetCore.BookStore.Application.BookOperations.Queries.GetBooks;
+using PatikaDev.NetCore.BookStore.Application.BookOperations.Commands.CreateBook;
+using PatikaDev.NetCore.BookStore.Application.BookOperations.Commands.UpdateBook;
 using PatikaDev.NetCore.BookStore.DBOperations;
 using PatikaDev.NetCore.BookStore.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using static PatikaDev.NetCore.BookStore.BookOperations.CreateBook.CreateBookCommand;
-using static PatikaDev.NetCore.BookStore.BookOperations.UpdateBook.UpdateBookCommand;
+using static PatikaDev.NetCore.BookStore.Application.BookOperations.Commands.CreateBook.CreateBookCommand;
+using static PatikaDev.NetCore.BookStore.Application.BookOperations.Commands.UpdateBook.UpdateBookCommand;
 
 namespace PatikaDev.NetCore.BookStore.Controllers
 {
@@ -42,19 +42,11 @@ namespace PatikaDev.NetCore.BookStore.Controllers
         public IActionResult GetById(int id)
         {
             GetBookByIdQuery query = new GetBookByIdQuery(_context,_mapper);
-            try
-            {
-                query.bookId = id;
-                GetBookByIdQueryValidator validator = new GetBookByIdQueryValidator();
-                validator.ValidateAndThrow(query);
-                var result = query.Handle();
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-            
+            query.bookId = id;
+            GetBookByIdQueryValidator validator = new GetBookByIdQueryValidator();
+            validator.ValidateAndThrow(query);
+            var result = query.Handle();
+            return Ok(result);  
         }
         /*[HttpGet("list")]
         public IActionResult GetList(string listName, string order)
@@ -68,53 +60,31 @@ namespace PatikaDev.NetCore.BookStore.Controllers
         public IActionResult Create([FromBody]CreateBookModel book)
         {
             CreateBookCommand command = new CreateBookCommand(_context,_mapper);
-            try
-            {
-                command.Model = book;
-                CreateBookCommandValidator validator = new CreateBookCommandValidator();
-                validator.ValidateAndThrow(command);
-                command.Handle();
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            command.Model = book;
+            CreateBookCommandValidator validator = new CreateBookCommandValidator();
+            validator.ValidateAndThrow(command);
+            command.Handle();
             return StatusCode(201);
         }
         [HttpPut("{id}")]
         public IActionResult Update(int id,[FromBody]UpdateBookModel book)
         {
             UpdateBookCommand command = new UpdateBookCommand(_context);
-            try
-            {
-                command.bookId = id;
-                command.Model = book;
-                UpdateBookCommandValidator validator = new UpdateBookCommandValidator();
-                validator.ValidateAndThrow(command);
-                command.Handle();
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            command.bookId = id;
+            command.Model = book;
+            UpdateBookCommandValidator validator = new UpdateBookCommandValidator();
+            validator.ValidateAndThrow(command);
+            command.Handle();
             return StatusCode(201);
         }
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
             DeleteBookCommand command = new DeleteBookCommand(_context);
-            try
-            {
-                command.bookId = id;
-                DeteleBookCommandValidator validator = new DeteleBookCommandValidator();
-                validator.ValidateAndThrow(command); 
-                command.Handle();
-            }
-            catch (Exception ex)
-            {
-
-                return BadRequest(ex.Message);
-            }
+            command.bookId = id;
+            DeleteBookCommandValidator validator = new DeleteBookCommandValidator();
+            validator.ValidateAndThrow(command); 
+            command.Handle();
             return Ok();
         }
 
